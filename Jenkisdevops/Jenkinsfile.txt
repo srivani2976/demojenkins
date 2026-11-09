@@ -1,0 +1,49 @@
+pipeline{
+    agent any
+        stages
+        {
+            stage("checkout"){
+                steps
+                {
+                    echo "source code checkout completed"
+                }
+            }
+            stage("Build")
+            {
+                steps{
+                    echo " build completed succesfully"
+                }
+            }
+             stage("Test")
+            {
+                steps{
+                    echo " test completed succesfully"
+                }
+            }
+             stage("Package")
+            {
+                steps{
+                    writeFile file:"application.txt"
+                     text:"application packaged"
+                    echo " Applicaton packaged succesfully"
+                }
+            }
+             stage("Artifact")
+            {
+                steps{
+                    archeiveArtifacts artifacts:"application.txt"
+                    echo "artifact generated succesfully"
+                }
+            }
+        }
+        post
+        {
+            success{
+                echo "pipeline completed succesfully"
+            }
+             failure{
+                echo "pipeline failed succesfully"
+            }
+        }
+    }
+}
