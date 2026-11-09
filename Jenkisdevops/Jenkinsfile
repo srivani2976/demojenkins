@@ -1,49 +1,48 @@
-pipeline{
+
+pipeline {
     agent any
-        stages
-        {
-            stage("checkout"){
-                steps
-                {
-                    echo "source code checkout completed"
-                }
-            }
-            stage("Build")
-            {
-                steps{
-                    echo " build completed succesfully"
-                }
-            }
-             stage("Test")
-            {
-                steps{
-                    echo " test completed succesfully"
-                }
-            }
-             stage("Package")
-            {
-                steps{
-                    writeFile file:"application.txt"
-                     text:"application packaged"
-                    echo " Applicaton packaged succesfully"
-                }
-            }
-             stage("Artifact")
-            {
-                steps{
-                    archeiveArtifacts artifacts:"application.txt"
-                    echo "artifact generated succesfully"
-                }
+
+    stages {
+        stage("Checkout") {
+            steps {
+                echo "Source code checkout completed"
             }
         }
-        post
-        {
-            success{
-                echo "pipeline completed succesfully"
+
+        stage("Build") {
+            steps {
+                echo "Build completed successfully"
             }
-             failure{
-                echo "pipeline failed succesfully"
+        }
+
+        stage("Test") {
+            steps {
+                echo "Test completed successfully"
             }
+        }
+
+        stage("Package") {
+            steps {
+                writeFile file: "application.txt", text: "Application packaged"
+                echo "Application packaged successfully"
+            }
+        }
+
+        stage("Artifact") {
+            steps {
+                archiveArtifacts artifacts: "application.txt"
+                echo "Artifact generated successfully"
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Pipeline completed successfully"
+        }
+
+        failure {
+            echo "Pipeline failed"
         }
     }
 }
